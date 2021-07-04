@@ -24,6 +24,10 @@ Angular app to discover cocktails and their ingredients with the help of multipl
 
 <img src="https://im2.ezgif.com/tmp/ezgif-2-986f096e733f.gif" align="center" />
 
+### Code Coverage
+
+<img src="https://i.ibb.co/8z31XbL/coverage.png" align="center" />
+
 ## Installation
 ### Clone the repo
 
