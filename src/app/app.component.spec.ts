@@ -1,13 +1,25 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { CocktailService } from './cocktail.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
+      imports:[HttpClientTestingModule,FormsModule],
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+      providers:[
+        CocktailService
+      ]
+    });
+    fixture = TestBed.createComponent(AppComponent)
+    component = fixture.componentInstance;
   });
 
   it('should create the app', () => {
@@ -22,10 +34,16 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angularCocktailDb');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angularCocktailDb app is running!');
-  });
+  it('filters are declared and initialized', () => {
+    expect(component['filters']).toEqual([
+      { name: 'c', value: 'strCategory' },
+      { name: 'i', value: 'strIngredient1' },
+      { name: 'g', value: 'strGlass' },
+      { name: 'a', value: 'strAlcoholic' },
+    ]);
+  })
+
+  it('searchEnabled is set to false', ()=> {
+    expect(component['searchEnabled']).toEqual(false);
+  })
 });
