@@ -18,7 +18,7 @@ Angular app to discover cocktails and their ingredients with the help of multipl
 
 ### Web View
 
-<img src="https://im2.ezgif.com/tmp/ezgif-2-33b4eaf41d6c.gif" align="center" />
+<img src="https://i.ibb.co/MSbbyFs/web-view.gif" align="center" />
 
 ### Mobile View
 
