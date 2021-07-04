@@ -1,5 +1,5 @@
-# Cocktail DB 
-## _Cocktail Discovery app, Angular_
+# Cocktail Discovery App 
+## _Cocktail DB, Angular_
 
 Angular app to discover cocktails and their ingredients with the help of multiple filters and fully responsive UI.
 
