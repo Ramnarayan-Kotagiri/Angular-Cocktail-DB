@@ -46,4 +46,16 @@ export class CocktailService {
       })
     );
   }
+
+  getDetailsOfCocktailById(id: number){
+    const url = this.API_PROVIDER_URL + 'lookup.php?i='+id;
+    return this.http.get<any>(url).pipe(
+      map(x => x.drinks),
+      catchError((err) => {
+        console.log('error caught in service');
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
 }

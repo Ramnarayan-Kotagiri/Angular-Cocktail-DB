@@ -1,9 +1,5 @@
-<nav class="navbar navbar-light bg-light">
-  <span class="navbar-brand mb-0 h1">The Cocktail DB</span>
-</nav>
-
 <div class="col-sm-12">
-  <div class="row">
+  <div class="row mt-2">
     <div class="wrapper">
       <select class="selectfilter" (change)="chooseFilter($event)">
         <option value="none" disabled hidden selected>Filter by</option>
@@ -15,27 +11,106 @@
         <option value="f">First Letter</option>
       </select>
       <input
-      *ngIf="searchEnabled"
+        *ngIf="searchEnabled"
         type="text"
         class="input"
         placeholder="Hit enter to search ..."
         [(ngModel)]="query"
         (keydown.enter)="searchBy()"
       />
-      <select *ngIf="!searchEnabled" class="selectfilter" (change)="chooseSubFilter($event)">
+      <select
+        *ngIf="!searchEnabled"
+        class="selectfilter"
+        (change)="chooseSubFilter($event)"
+      >
         <option value="none" disabled hidden selected>Search ...</option>
-        <option *ngFor="let filter of appliedFilterItems" value="{{filter}}">{{filter}}</option>
+        <option *ngFor="let filter of appliedFilterItems" value="{{ filter }}">
+          {{ filter }}
+        </option>
       </select>
     </div>
   </div>
-  <div class="row" *ngIf="filtersEnabled">
-    <div class="card" style="width: 18rem;" *ngFor="let cocktail of results">
-      <img class="card-img-top" src="{{cocktail?.strDrinkThumb}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{cocktail?.strDrink}}</h5>
-        <p class="card-text">{{cocktail?.idDrink}}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+  <div class="row paginator" *ngIf="filtersEnabled">
+    <pagination-controls
+      (pageChange)="p = $event"
+      [autoHide]="true"
+      [responsive]="true"
+    ></pagination-controls>
+  </div>
+
+  <div class="row containercard" *ngIf="filtersEnabled">
+    <div
+      class="card"
+      *ngFor="
+        let cocktail of results | paginate: { itemsPerPage: 8, currentPage: p }
+      "
+    >
+      <div class="imgBx">
+        <img
+          src="{{ cocktail?.strDrinkThumb }}"
+          alt=""
+          class="containerimage"
+        />
+      </div>
+      <div class="contentBx">
+        <h2>{{ cocktail?.strDrink }}</h2>
+        <p>ID : {{ cocktail?.idDrink }}</p>
+        <a href="#bottom-sheet" (click)="openBottomSheet(cocktail?.idDrink)"
+          ><span>Read More</span></a
+        >
       </div>
     </div>
   </div>
+</div>
+
+<div id="bottom-sheet" class="overlay">
+  <aside
+    class="detail"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modal-label"
+    aria-hidden="true"
+  >
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="drinkThumb">
+          <div class="imgBx">
+            <img src="{{ cocktailSelected?.strDrinkThumb }}" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="bottomcard">
+          <h3>Drink</h3>
+          <p>{{ cocktailSelected?.strDrink }}</p>
+        </div>
+        <br />
+        <div class="bottomcard">
+          <h3>Instructions</h3>
+          <p>{{ cocktailSelected?.strInstructions }}</p>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="bottomcard">
+          <h3>Category</h3>
+          <p>{{ cocktailSelected?.strCategory }}</p>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="bottomcard">
+          <h3>Glass</h3>
+          <p>{{ cocktailSelected?.strGlass }}</p>
+        </div>
+      </div>
+    </div>
+    <a href="#close" class="btn-close" aria-hidden="true"
+      ><span class="mdi mdi-close"></span><span class="sr-only">Close</span></a
+    >
+  </aside>
+  <a href="#close" class="btn-close" aria-hidden="true"
+    ><span class="mdi mdi-close"></span><span class="sr-only">Close</span></a
+  >
 </div>

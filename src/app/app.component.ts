@@ -28,6 +28,8 @@ export class AppComponent {
   searchEnabled = false;
   results:any = [];
   filtersEnabled = false;
+  p: number = 1;
+  cocktailSelected: any;
 
   constructor(private cocktail: CocktailService) {}
 
@@ -77,5 +79,19 @@ export class AppComponent {
       alert('ERROR: There was an error fetching the filtered cocktails result.');
     }
   )
+  }
+
+  openBottomSheet(id: number){
+    console.log(id)
+    this.cocktail.getDetailsOfCocktailById(id).subscribe(
+      (resp)=> {
+        this.cocktailSelected = resp;
+        this.cocktailSelected = this.cocktailSelected[0]
+        console.log(this.cocktailSelected)
+      },
+      (error: any) => {
+        alert('ERROR: There was an error fetching the filtered cocktails result.');
+      }
+    )
   }
 }
